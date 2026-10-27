@@ -29,9 +29,7 @@
     </picture>
   </a>
   <br/><br/>
-  <a href="https://u8views.com/github/gunout">
-    <img src="https://u8views.com/api/v1/github/profiles/88831335/views/day-week-month-total-count.svg" alt="Views" />
-  </a>
+ 
 </p>
 
 <p align="center">
