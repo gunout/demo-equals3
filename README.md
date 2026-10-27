@@ -1,181 +1,238 @@
+<!-- ============================================================ -->
+<!--  DEMO-EQUALS3 — FUTURISTIC NEON ROSE README                  -->
+<!--  style: gunout/gunout                                        -->
+<!-- ============================================================ -->
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/gunout/gunout/main/assets/images/divider_neon.svg" alt="Divider" />
+</p>
+
+<p align="center">
+  <a href="https://gunout.github.io/demo-equals3/">
+    <img src="https://raw.githubusercontent.com/gunout/gunout/main/assets/images/banner_neon.svg" alt="Banner" />
+  </a>
+</p>
+
+<p align="center">
+  <img src="https://readme-typing-svg.herokuapp.com?font=Orbitron&weight=700&size=24&pause=800&color=FF2D95&background=0D001A00&center=true&vCenter=true&random=true&width=800&lines=%E2%96%B6+Initializing+equals3+protocol...;%E2%96%B6+Loading+MD5+magic+hashes...;%E2%96%B6+Simulating+PHP+7.4+vs+8.0...;%E2%96%B6+Demonstrating+type+juggling...;%E2%96%B6+System+online.+Welcome." alt="Typing SVG" />
+</p>
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/gunout/gunout/main/assets/images/divider_neon.svg" alt="Divider" />
+</p>
+
+<p align="center">
+  <a href="https://gunout.github.io/demo-equals3/">
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/gunout/gunout/main/assets/images/dark_mode_neon.svg">
+      <img alt="demo-equals3 README" src="https://raw.githubusercontent.com/gunout/gunout/main/assets/images/light_mode_neon.svg">
+    </picture>
+  </a>
+  <br/><br/>
+  <a href="https://u8views.com/github/gunout">
+    <img src="https://u8views.com/api/v1/github/profiles/88831335/views/day-week-month-total-count.svg" alt="Views" />
+  </a>
+</p>
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/gunout/gunout/main/assets/images/divider_neon.svg" alt="Divider" />
+</p>
+
+<h2 align="center">⚡ <code>whoami</code></h2>
+
+<p align="center">
+  <samp>
+    <span style="color:#FF2D95;">🔐 Security Demo</span> — PHP type juggling, <code>==</code> vs <code>===</code> on MD5<br>
+    <span style="color:#FF69B4;">🌐 Web</span> — HTML, JavaScript, SVG inline, CSS custom<br>
+    <span style="color:#FFB6D9;">🐚 Zero Build</span> — one <code>index.html</code>, no local dependency<br>
+    <span style="color:#FF2D95;">🧪 Interactive</span> — live MD5 calculator, PHP 7.4 / 8.0+ simulator<br>
+    <span style="color:#FF69B4;">🎯 Education</span> — raise awareness on auth best practices<br>
+    <span style="color:#FFB6D9;">📦 Deploy</span> — GitHub Pages, static, 100% client-side
+  </samp>
+</p>
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/gunout/gunout/main/assets/images/divider_neon.svg" alt="Divider" />
+</p>
+
+<h2 align="center">🎯 <code>the_project</code></h2>
+
+<p align="center">
+  <samp>
+    In <b>PHP &lt; 8.0</b>, <code>==</code> casts numeric strings to numbers.<br>
+    A MD5 hash starting with <code>0e</code> followed by digits (<code>0e462097…</code>) is read as <b>0 × 10^n = 0</b>.<br>
+    Two different "magic hashes" therefore become <b>equal</b> — bypassing a poorly coded authentication.<br><br>
+    ⚠️ <b>Educational use only.</b> Do not use on any system without written authorization.
+  </samp>
+</p>
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/gunout/gunout/main/assets/images/divider_neon.svg" alt="Divider" />
+</p>
+
+<h2 align="center">🛠️ <code>tech_stack</code></h2>
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/gunout/gunout/main/assets/images/icons/HTMLIcon.svg" width="60" height="60" alt="HTML5" title="HTML5"/>
+  <img src="https://raw.githubusercontent.com/gunout/gunout/main/assets/images/icons/CSSIcon.svg" width="60" height="60" alt="CSS3" title="CSS3"/>
+  <img src="https://raw.githubusercontent.com/gunout/gunout/main/assets/images/icons/JSIcon.svg" width="60" height="60" alt="JavaScript" title="JavaScript"/>
+  <img src="https://raw.githubusercontent.com/gunout/gunout/main/assets/images/icons/PythonIcon.svg" width="60" height="60" alt="PHP" title="PHP 7.4 / 8.0+"/>
+  <img src="https://raw.githubusercontent.com/gunout/gunout/main/assets/images/icons/DockerIcon.svg" width="60" height="60" alt="SparkMD5" title="SparkMD5 (CDN)"/>
+  <img src="https://raw.githubusercontent.com/gunout/gunout/main/assets/images/icons/BackBoxIcon.svg" width="60" height="60" alt="Security" title="Security / type juggling"/>
+</p>
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/gunout/gunout/main/assets/images/divider_neon.svg" alt="Divider" />
+</p>
+
+<h2 align="center">🚀 <code>features</code></h2>
+
+<p align="center">
+  <i>What the demo actually does</i>
+</p>
+
+<h3 align="center">🧮 MD5 & Magic Hashes</h3>
+<p align="center">
+  <a href="https://gunout.github.io/demo-equals3/"><img src="https://img.shields.io/badge/live--md5--calculator-FF2D95?style=for-the-badge&logo=javascript&logoColor=white" /></a>
+  <a href="https://gunout.github.io/demo-equals3/"><img src="https://img.shields.io/badge/magic--hash--detector-FF69B4?style=for-the-badge&logo=databricks&logoColor=white" /></a>
+  <a href="https://gunout.github.io/demo-equals3/"><img src="https://img.shields.io/badge/known--hashes--table-FFB6D9?style=for-the-badge&logo=databricks&logoColor=white" /></a>
+</p>
+
+<h3 align="center">🧪 PHP Simulator</h3>
+<p align="center">
+  <a href="https://gunout.github.io/demo-equals3/"><img src="https://img.shields.io/badge/PHP--7.4-vulnerable-FF2D95?style=for-the-badge&logo=php&logoColor=white" /></a>
+  <a href="https://gunout.github.io/demo-equals3/"><img src="https://img.shields.io/badge/PHP--8.0%2B-patched-FF69B4?style=for-the-badge&logo=php&logoColor=white" /></a>
+  <a href="https://gunout.github.io/demo-equals3/"><img src="https://img.shields.io/badge/loose--vs--strict-FFB6D9?style=for-the-badge&logo=php&logoColor=white" /></a>
+</p>
+
+<h3 align="center">🛡️ Defense & Education</h3>
+<p align="center">
+  <a href="https://gunout.github.io/demo-equals3/"><img src="https://img.shields.io/badge/hash__equals-FF2D95?style=for-the-badge&logo=letsencrypt&logoColor=white" /></a>
+  <a href="https://gunout.github.io/demo-equals3/"><img src="https://img.shields.io/badge/password__verify-FF69B4?style=for-the-badge&logo=letsencrypt&logoColor=white" /></a>
+  <a href="https://gunout.github.io/demo-equals3/"><img src="https://img.shields.io/badge/step--by--step--attack-FFB6D9?style=for-the-badge&logo=target&logoColor=white" /></a>
+</p>
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/gunout/gunout/main/assets/images/divider_neon.svg" alt="Divider" />
+</p>
+
+<h2 align="center">🧪 <code>examples_to_test</code></h2>
+
+<p align="center">
+  <samp>
+    <code>240610708</code> → <code>0e462097431906509019562988736854</code> ✅<br>
+    <code>QNKCDZO</code> → <code>0e830400451993494058024219903391</code> ✅<br>
+    <code>aabg7XSs</code> → <code>0e087386482136013740957780965295</code> ✅<br>
+    <code>aabC9RqS</code> → <code>0e041022518165728065344349536299</code> ✅<br>
+    <code>password</code> → <code>5f4dcc3b5aa765d61d8327deb882cf99</code> ❌<br>
+    <code>admin</code> → <code>21232f297a57a5a743894a0e4a801fc3</code> ❌
+  </samp>
+</p>
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/gunout/gunout/main/assets/images/divider_neon.svg" alt="Divider" />
+</p>
+
+<h2 align="center">🛡️ <code>defense</code></h2>
+
+<p align="center">
+  <samp>
+    <code>// ❌ vulnerable</code><br>
+    <code>if (md5($input) == $stored) { … }</code><br><br>
+    <code>// ⚠️ strict</code><br>
+    <code>if (md5($input) === $stored) { … }</code><br><br>
+    <code>// ✅ constant-time</code><br>
+    <code>if (hash_equals($stored, md5($input))) { … }</code><br><br>
+    <code>// ✅✅ passwords</code><br>
+    <code>if (password_verify($input, $stored)) { … }</code>
+  </samp>
+</p>
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/gunout/gunout/main/assets/images/divider_neon.svg" alt="Divider" />
+</p>
+
+<h2 align="center">📈 <code>github_stats</code></h2>
+
+<p align="center">
+  <img src="https://repobeats.axiom.co/api/embed/4e35902336cf1bfe2c35b94d061bba0e75d0e337.svg" alt="Repobeats analytics" />
+</p>
+
+<p align="center">
+  <img src="https://github-readme-streak-stats.herokuapp.com/?user=gunout&theme=radical&mode=daily&hide_border=true&stroke=FF2D95&background=0D001A&ring=FF69B4&fire=FF2D95&currStreakLabel=FFB6D9" alt="streak graph"/>
+  <img src="https://github-stats-extended.vercel.app/api/top-langs/?username=gunout&langs_count=6&theme=radical&hide_border=true&bg_color=0D001A&title_color=FF2D95&text_color=FFB6D9" alt="top langs"/>
+  <img src="https://github-stats-extended.vercel.app/api/?username=gunout&show_icons=true&theme=radical&rank_icon=github&include_all_commits=true&disable_animations=true&number_format=long&show=prs_merged_percentage,prs_reviewed&hide_border=true&bg_color=0D001A&title_color=FF2D95&text_color=FFB6D9&icon_color=FF69B4" alt="stats"/>
+</p>
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/gunout/gunout/main/assets/images/divider_neon.svg" alt="Divider" />
+</p>
+
+<h2 align="center">🧭 <code>references</code></h2>
+
+<p align="center">
+  <samp>
+    <a href="https://wiki.php.net/rfc/string_to_number_comparison">📚 PHP RFC — Saner string to number comparisons</a><br>
+    <a href="https://owasp.org/www-community/vulnerabilities/PHP_Object_Injection">📖 OWASP — PHP Type Juggling</a><br>
+    <a href="https://github.com/digininja/DVWA">🧪 DVWA — Damn Vulnerable Web Application</a><br>
+    <a href="https://www.root-me.org/">🎯 Root-Me — challenges PHP</a><br>
+    <a href="https://www.php.net/manual/fr/function.password-hash.php">🔐 PHP password_hash()</a> / <a href="https://www.php.net/manual/fr/function.password-verify.php">password_verify()</a>
+  </samp>
+</p>
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/gunout/gunout/main/assets/images/divider_neon.svg" alt="Divider" />
+</p>
+
+<h2 align="center">⚖️ <code>ethics_&_legal</code></h2>
+
+<p align="center">
+  <samp>
+    Educational use only. In France, unauthorized access to a system is punishable<br>
+    by <b>article 323-1 of the French Penal Code</b> (up to 3 years and €100,000 fine).<br>
+    The author declines any responsibility for malicious use.
+  </samp>
+</p>
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/gunout/gunout/main/assets/images/divider_neon.svg" alt="Divider" />
+</p>
+
+<h2 align="center">📂 <code>structure</code></h2>
+
+<p align="center">
+  <samp>
+    demo-equals3/<br>
+    ├── index.html      # full demo (HTML + CSS + JS inline)<br>
+    ├── README.md       # this file<br>
+    └── LICENSE         # MIT
+  </samp>
+</p>
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/gunout/gunout/main/assets/images/divider_neon.svg" alt="Divider" />
+</p>
+
 <div align="center">
+  <h3>💖 Support my work</h3>
 
-<svg width="720" height="180" viewBox="0 0 720 180" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="demo-equals3 — type juggling animation">
-  <defs>
-    <linearGradient id="grad" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="#0055A4"/>
-      <stop offset="100%" stop-color="#EF4135"/>
-    </linearGradient>
-    <filter id="glow">
-      <feGaussianBlur stdDeviation="2" result="blur"/>
-      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
-    </filter>
-  </defs>
+  <a href="https://ko-fi.com/gunout">
+    <img height='50' src='https://storage.ko-fi.com/cdn/kofi5.png?v=3' alt='Support me on Ko-fi' />
+  </a>
+  &nbsp;&nbsp;
+  <a href="https://www.buymeacoffee.com/gunout">
+    <img height='50' src='https://cdn.buymeacoffee.com/buttons/v2/default-blue.png' alt='Buy Me A Coffee' />
+  </a>
 
-  <!-- Fond -->
-  <rect width="720" height="180" fill="#0d1117" rx="12"/>
-  <rect x="1" y="1" width="718" height="178" fill="none" stroke="url(#grad)" stroke-width="2" rx="12"/>
+  <br/><br/>
 
-  <!-- Titre -->
-  <text x="360" y="45" text-anchor="middle" fill="#ffffff" font-family="monospace" font-size="20" font-weight="700" filter="url(#glow)">
-    demo-equals3
-  </text>
-  <text x="360" y="68" text-anchor="middle" fill="#8b949e" font-family="monospace" font-size="12">
-    PHP type juggling — == vs === on MD5 magic hashes
-  </text>
-
-  <!-- Boîte gauche : hash magique 1 -->
-  <g>
-    <rect x="40" y="95" width="220" height="50" rx="8" fill="#161b22" stroke="#0055A4" stroke-width="1.5"/>
-    <text x="150" y="118" text-anchor="middle" fill="#58a6ff" font-family="monospace" font-size="11">0e462097431…</text>
-    <text x="150" y="135" text-anchor="middle" fill="#8b949e" font-family="monospace" font-size="9">= 0 × 10^n = 0</text>
-    <animate attributeName="opacity" values="0.6;1;0.6" dur="2s" repeatCount="indefinite"/>
-  </g>
-
-  <!-- Opérateur == -->
-  <text x="290" y="128" text-anchor="middle" fill="#EF4135" font-family="monospace" font-size="18" font-weight="700">
-    ==
-    <animate attributeName="opacity" values="1;0.2;1" dur="1.2s" repeatCount="indefinite"/>
-  </text>
-
-  <!-- Boîte droite : hash magique 2 -->
-  <g>
-    <rect x="320" y="95" width="220" height="50" rx="8" fill="#161b22" stroke="#EF4135" stroke-width="1.5"/>
-    <text x="430" y="118" text-anchor="middle" fill="#ff7b72" font-family="monospace" font-size="11">0e830400451…</text>
-    <text x="430" y="135" text-anchor="middle" fill="#8b949e" font-family="monospace" font-size="9">= 0 × 10^n = 0</text>
-    <animate attributeName="opacity" values="0.6;1;0.6" dur="2s" begin="0.3s" repeatCount="indefinite"/>
-  </g>
-
-  <!-- Flèche -->
-  <text x="565" y="128" text-anchor="middle" fill="#8b949e" font-family="monospace" font-size="16">→</text>
-
-  <!-- Résultat TRUE -->
-  <g>
-    <rect x="585" y="105" width="100" height="35" rx="6" fill="#EF4135">
-      <animate attributeName="fill" values="#EF4135;#ff6b5e;#EF4135" dur="2s" repeatCount="indefinite"/>
-    </rect>
-    <text x="635" y="128" text-anchor="middle" fill="#ffffff" font-family="monospace" font-size="14" font-weight="700">TRUE</text>
-  </g>
-
-  <!-- Ligne de scan -->
-  <line x1="40" y1="160" x2="680" y2="160" stroke="#30363d" stroke-width="1"/>
-  <circle r="3" fill="#0055A4">
-    <animate attributeName="cx" values="40;680;40" dur="4s" repeatCount="indefinite"/>
-    <animate attributeName="cy" values="160;160;160" dur="4s" repeatCount="indefinite"/>
-    <animate attributeName="fill" values="#0055A4;#EF4135;#0055A4" dur="4s" repeatCount="indefinite"/>
-  </circle>
-</svg>
-
-<br/>
-
-# 🧪 demo-equals3
-
-**Démonstration interactive du type juggling PHP (`==` vs `===`) sur les hashs MD5**
-
-[![Live Demo](https://img.shields.io/badge/demo-live-0055A4?style=for-the-badge&logo=githubpages&logoColor=white)](https://gunout.github.io/demo-equals3/)
-[![License](https://img.shields.io/badge/license-MIT-EF4135?style=for-the-badge)](./LICENSE)
-[![Made with ❤️](https://img.shields.io/badge/made%20with-%E2%9D%A4%EF%B8%8F-EF4135?style=for-the-badge)](#)
-
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/gunout/gunout/main/assets/images/footer_neon.svg">
+    <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/gunout/gunout/main/assets/images/footer_neon.svg">
+    <img src="https://raw.githubusercontent.com/gunout/gunout/main/assets/images/footer_neon.svg" alt="Footer" width="100%" />
+  </picture>
 </div>
 
----
-
-## ⚡whoami
-
-🔐 **Security Demo** — type juggling PHP, `==` vs `===` sur hashs MD5
-🌐 **Web** — HTML, JavaScript, SVG inline, CSS custom
-🐚 **Zero Build** — un seul `index.html`, aucune dépendance locale
-🧪 **Interactive** — calculateur MD5 en direct, simulateur PHP 7.4 / 8.0+
-🎯 **Education** — sensibilisation aux bonnes pratiques d'authentification
-
-## 🎯le projet
-
-Démonstration **interactive et pédagogique** de la faille **type juggling** en PHP.
-
-En **PHP < 8.0**, `==` convertit les chaînes numériques en nombres. Un hash MD5 commençant par `0e` suivi de chiffres (`0e462097…`) est interprété comme **0 × 10^n = 0**. Deux hashs « magiques » différents deviennent donc **égaux**, permettant de contourner une authentification mal codée.
-
-> ⚠️ **Usage pédagogique uniquement.** Ne pas utiliser sur un système sans autorisation écrite.
-
-## 🛠️tech_stack
-
-![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=flat-square&logo=html5&logoColor=white)
-![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=flat-square&logo=css3&logoColor=white)
-![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=flat-square&logo=javascript&logoColor=black)
-![PHP](https://img.shields.io/badge/PHP-777BB4?style=flat-square&logo=php&logoColor=white)
-![GitHub Pages](https://img.shields.io/badge/GitHub%20Pages-deployed-2f855a?style=flat-square&logo=github&logoColor=white)
-
-## 🚀démo
-
-👉 **[gunout.github.io/demo-equals3](https://gunout.github.io/demo-equals3/)**
-
-```bash
-git clone https://github.com/gunout/demo-equals3.git
-cd demo-equals3
-xdg-open index.html    # Linux
-open index.html        # macOS
-start index.html       # Windows
-```
-
-## 🧪exemples à tester
-
-| entrée | md5 | magic |
-|---|---|---|
-| `240610708` | `0e462097431906509019562988736854` | ✅ |
-| `QNKCDZO` | `0e830400451993494058024219903391` | ✅ |
-| `aabg7XSs` | `0e087386482136013740957780965295` | ✅ |
-| `aabC9RqS` | `0e041022518165728065344349536299` | ✅ |
-| `password` | `5f4dcc3b5aa765d61d8327deb882cf99` | ❌ |
-
-## 🛡️défense
-
-```php
-// ❌ vulnérable
-if (md5($input) == $stored) { /* … */ }
-
-// ⚠️ strict
-if (md5($input) === $stored) { /* … */ }
-
-// ✅ constant-time
-if (hash_equals($stored, md5($input))) { /* … */ }
-
-// ✅✅ mots de passe
-if (password_verify($input, $stored)) { /* … */ }
-```
-
-## 📂structure
-
-```
-demo-equals3/
-├── index.html      # démo complète
-├── README.md       # ce fichier
-└── LICENSE         # MIT
-```
-
-## 🧭références
-
-- 📚 [PHP RFC — Saner string to number comparisons](https://wiki.php.net/rfc/string_to_number_comparison)
-- 📖 [OWASP — PHP Type Juggling](https://owasp.org/www-community/vulnerabilities/PHP_Object_Injection)
-- 🧪 [DVWA](https://github.com/digininja/DVWA)
-- 🔐 [PHP `password_hash()`](https://www.php.net/manual/fr/function.password-hash.php)
-
-## ⚖️éthique & légalité
-
-Usage **pédagogique uniquement**. En France, l'accès non autorisé à un système est réprimé par l'**article 323-1 du Code pénal**.
-
-## 📄licence
-
-MIT — voir [LICENSE](./LICENSE).
-
-## 👤auteur
-
-**[@gunout](https://github.com/gunout)**
-
----
-
-<div align="center">
-
-[![GitHub stars](https://img.shields.io/github/stars/gunout/demo-equals3?style=social)](https://github.com/gunout/demo-equals3/stargazers)
-[![GitHub forks](https://img.shields.io/github/forks/gunout/demo-equals3?style=social)](https://github.com/gunout/demo-equals3/network/members)
-
-</svg>
-</div>
+<p align="center">
+  <img src="https://raw.githubusercontent.com/gunout/gunout/main/assets/images/divider_neon.svg" alt="Divider" />
+</p>
