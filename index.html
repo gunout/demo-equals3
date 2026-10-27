@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Type Juggling PHP — Démonstration Interactive</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+    font-family: 'SF Mono', 'Fira Code', Menlo, Monaco, Consolas, 'Ubuntu Mono', monospace;
+    background: #f7f9fc;
+    color: #1a2332;
+    line-height: 1.6;
+    padding: 0 1em 6em;
+    min-height: 100vh;
+}
+.container { max-width: 960px; margin: 0 auto; }
+
+/* ─── Bandeau tricolore ─── */
+.tricolore {
+    height: 6px;
+    display: flex;
+    border-radius: 0 0 4px 4px;
+    overflow: hidden;
+}
+.tricolore span { flex: 1; }
+.tricolore .bleu { background: #0055A4; }
+.tricolore .blanc { background: #ffffff; border-top: 1px solid #e2e8f0; border-bottom: 1px solid #e2e8f0; }
+.tricolore .rouge { background: #EF4135; }
+
+/* ─── Header ─── */
+header {
+    position: relative;
+    text-align: center;
+    padding: 3.5em 1em 2.5em;
+    margin-bottom: 2.5em;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-top: none;
+    border-radius: 0 0 16px 16px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0,85,164,0.06);
+}
+.avatar {
+    width: 96px; height: 96px; border-radius: 50%;
+    margin: 0 auto 1em;
+    display: flex; align-items: center; justify-content: center;
+    background: #ffffff;
+    border: 3px solid #0055A4;
+    animation: pulseRing 2.5s infinite;
+}
+@keyframes pulseRing {
+    0%   { box-shadow: 0 0 0 0 rgba(0,85,164,0.35); }
+    70%  { box-shadow: 0 0 0 18px rgba(0,85,164,0); }
+    100% { box-shadow: 0 0 0 0 rgba(0,85,164,0); }
+}
+.avatar svg { width: 54px; height: 54px; }
+header h1 {
+    font-size: 2.2em; font-weight: 700;
+    color: #1a2332; margin-bottom: 0.3em;
+    letter-spacing: -0.02em;
+}
+header h1 .bleu { color: #0055A4; }
+header .subtitle {
+    font-size: 1em; color: #4a5568;
+    max-width: 640px; margin: 0 auto 1.2em;
+}
+header .badges {
+    display: flex; flex-wrap: wrap; gap: 0.5em;
+    justify-content: center; margin-top: 1em;
+}
+.badge {
+    font-size: 0.78em; padding: 0.3em 0.8em;
+    border-radius: 999px; border: 1px solid #cbd5e0;
+    background: #ffffff; color: #4a5568;
+    display: inline-flex; align-items: center; gap: 0.4em;
+}
+.badge.bleu   { border-color: #0055A4; color: #0055A4; background: rgba(0,85,164,0.06); }
+.badge.rouge  { border-color: #EF4135; color: #c0392b; background: rgba(239,65,53,0.06); }
+.badge.vert   { border-color: #2f855a; color: #2f855a; background: rgba(47,133,90,0.06); }
+.badge.jaune  { border-color: #b7791f; color: #975a16; background: rgba(183,121,31,0.08); }
+
+/* ─── Sections ─── */
+section {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    padding: 1.8em 2em;
+    border-radius: 12px;
+    margin-bottom: 1.8em;
+    opacity: 0; transform: translateY(24px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+    box-shadow: 0 1px 3px rgba(26,35,50,0.04);
+}
+section.visible { opacity: 1; transform: translateY(0); }
+section h2 {
+    font-size: 1.45em; margin-bottom: 0.9em;
+    padding-bottom: 0.5em;
+    border-bottom: 2px solid #e2e8f0;
+    color: #1a2332;
+    display: flex; align-items: center; gap: 0.6em;
+}
+section h2 .ico { width: 26px; height: 26px; flex-shrink: 0; }
+section h3 {
+    font-size: 1.05em; margin: 1.3em 0 0.5em;
+    color: #0055A4;
+    display: flex; align-items: center; gap: 0.5em;
+}
+section h3 .ico { width: 20px; height: 20px; }
+p { margin-bottom: 0.9em; color: #2d3748; }
+code {
+    background: #f1f5f9;
+    border: 1px solid #e2e8f0;
+    padding: 0.1em 0.4em;
+    border-radius: 4px;
+    font-size: 0.9em;
+    color: #0055A4;
+}
+pre {
+    background: #1a2332;
+    border: 1px solid #2d3748;
+    padding: 1.1em 1.3em;
+    border-radius: 8px;
+    overflow-x: auto;
+    font-size: 0.86em; line-height: 1.55;
+    margin: 0.8em 0;
+    color: #e2e8f0;
+}
+pre code { background: transparent; border: none; color: inherit; padding: 0; }
+.kw  { color: #ff8a80; }
+.str { color: #a5e8b0; }
+.var { color: #90caf9; }
+.cmt { color: #94a3b8; font-style: italic; }
+.fn  { color: #d2a8ff; }
+
+/* ─── Table ─── */
+table { width: 100%; border-collapse: collapse; margin: 0.8em 0; font-size: 0.92em; }
+th, td { padding: 0.6em 0.8em; border-bottom: 1px solid #e2e8f0; text-align: left; }
+th {
+    background: #f1f5f9; color: #4a5568;
+    font-weight: 600; text-transform: uppercase;
+    font-size: 0.8em; letter-spacing: 0.05em;
+}
+tr:hover td { background: rgba(0,85,164,0.03); }
+
+/* ─── Inputs / buttons ─── */
+.input-group { display: flex; gap: 0.5em; align-items: center; margin: 0.5em 0; flex-wrap: wrap; }
+input[type=text] {
+    flex: 1; min-width: 200px;
+    padding: 0.65em 0.9em;
+    background: #ffffff;
+    border: 1px solid #cbd5e0;
+    border-radius: 6px;
+    color: #1a2332;
+    font-size: 0.95em;
+    font-family: inherit;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+input[type=text]:focus {
+    outline: none;
+    border-color: #0055A4;
+    box-shadow: 0 0 0 3px rgba(0,85,164,0.15);
+}
+.btn {
+    padding: 0.55em 1.1em;
+    border: 1px solid #0055A4;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.92em; font-weight: 600;
+    background: #0055A4; color: #ffffff;
+    font-family: inherit;
+    transition: background 0.2s, transform 0.1s;
+}
+.btn:hover { background: #004080; }
+.btn:active { transform: scale(0.97); }
+.btn:disabled { opacity: 0.6; cursor: wait; }
+.btn.rouge { background: #EF4135; border-color: #EF4135; }
+.btn.rouge:hover { background: #c0392b; }
+
+/* ─── Toggle ─── */
+.toggle-group {
+    display: inline-flex;
+    background: #f1f5f9;
+    border: 1px solid #cbd5e0;
+    border-radius: 8px;
+    padding: 3px; margin: 0.4em 0;
+}
+.toggle-group button {
+    padding: 0.45em 0.95em;
+    border: none; background: transparent;
+    cursor: pointer; border-radius: 6px;
+    font-size: 0.88em; color: #4a5568;
+    font-weight: 600; font-family: inherit;
+    transition: all 0.2s;
+}
+.toggle-group button.active {
+    background: #ffffff; color: #0055A4;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+.toggle-group.danger button.active { color: #EF4135; }
+.toggle-group.success button.active { color: #2f855a; }
+
+/* ─── Result boxes ─── */
+.result-box {
+    margin-top: 1em;
+    padding: 1em 1.2em;
+    border-radius: 8px;
+    background: #f7f9fc;
+    border-left: 4px solid #0055A4;
+    transition: all 0.3s;
+}
+.result-box.success { border-left-color: #2f855a; background: rgba(47,133,90,0.06); }
+.result-box.danger  { border-left-color: #EF4135; background: rgba(239,65,53,0.06); }
+.result-box.warn    { border-left-color: #b7791f; background: rgba(183,121,31,0.06); }
+.result-box pre { margin: 0.5em 0 0; }
+
+/* ─── Hash display ─── */
+.hash-display {
+    font-size: 0.9em;
+    word-break: break-all;
+    padding: 0.7em 0.9em;
+    background: #1a2332;
+    border: 1px solid #2d3748;
+    color: #90caf9;
+    border-radius: 6px;
+    margin: 0.5em 0;
+    position: relative;
+}
+.hash-display.magic { border-color: #b7791f; color: #ffd54f; }
+.hash-display.magic::after {
+    content: "MAGIC";
+    position: absolute; top: -8px; right: 8px;
+    font-size: 0.65em; font-weight: 700;
+    background: #b7791f; color: #fff;
+    padding: 0.1em 0.5em; border-radius: 999px;
+    letter-spacing: 0.05em;
+}
+
+/* ─── Diagram ─── */
+.diagram {
+    display: flex; align-items: center; justify-content: center;
+    gap: 0.8em; margin: 1.2em 0; flex-wrap: wrap;
+}
+.diagram-box {
+    background: #f7f9fc;
+    padding: 0.9em 1.1em;
+    border-radius: 8px;
+    text-align: center;
+    min-width: 170px;
+    border: 2px solid #cbd5e0;
+    font-size: 0.9em;
+}
+.diagram-box.magic { border-color: #b7791f; background: rgba(183,121,31,0.06); }
+.diagram-box strong { color: #1a2332; display: block; margin-bottom: 0.2em; }
+.diagram-box small { color: #4a5568; font-size: 0.82em; }
+.diagram-arrow { font-size: 1.4em; color: #a0aec0; }
+.diagram-equals {
+    background: #2f855a; color: #fff;
+    padding: 0.4em 1em; border-radius: 6px;
+    font-weight: 700; font-size: 0.9em;
+}
+.diagram-equals.false { background: #EF4135; }
+
+/* ─── Steps ─── */
+.diagram-step {
+    display: flex; gap: 1em; align-items: flex-start;
+    margin: 0.9em 0; padding: 1em;
+    background: #f7f9fc;
+    border: 1px solid #e2e8f0;
+    border-left: 4px solid #cbd5e0;
+    border-radius: 8px;
+    transition: all 0.35s;
+    opacity: 0.55;
+}
+.diagram-step.active {
+    opacity: 1; border-left-color: #0055A4;
+    background: rgba(0,85,164,0.05);
+    transform: translateX(4px);
+}
+.diagram-step.success {
+    opacity: 1; border-left-color: #2f855a;
+    background: rgba(47,133,90,0.05);
+}
+.diagram-step.danger {
+    opacity: 1; border-left-color: #EF4135;
+    background: rgba(239,65,53,0.07);
+}
+.step-number {
+    background: #e2e8f0; color: #1a2332;
+    width: 30px; height: 30px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700; flex-shrink: 0;
+    border: 1px solid #cbd5e0;
+}
+.diagram-step.active .step-number { background: #0055A4; color: #fff; border-color: #0055A4; }
+.diagram-step.success .step-number { background: #2f855a; color: #fff; border-color: #2f855a; }
+.diagram-step.danger .step-number { background: #EF4135; color: #fff; border-color: #EF4135; }
+.step-content { flex: 1; font-size: 0.92em; }
+
+/* ─── Notes ─── */
+.note, .warning {
+    padding: 1em 1.2em;
+    border-radius: 8px;
+    margin: 1em 0;
+    font-size: 0.92em;
+    border-left: 4px solid;
+}
+.note { background: rgba(0,85,164,0.05); border-left-color: #0055A4; }
+.warning { background: rgba(183,121,31,0.07); border-left-color: #b7791f; }
+.warning ul { margin-left: 1.4em; margin-top: 0.5em; }
+.warning li { margin-bottom: 0.3em; }
+
+/* ─── Grid ─── */
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1em; margin: 1em 0; }
+@media (max-width: 760px) {
+    .grid-2 { grid-template-columns: 1fr; }
+    .diagram { flex-direction: column; }
+    .diagram-arrow { transform: rotate(90deg); }
+    header h1 { font-size: 1.6em; }
+    section { padding: 1.4em 1.2em; }
+}
+
+/* ─── Footer ─── */
+.footer-note {
+    text-align: center; color: #718096;
+    font-size: 0.85em; margin-top: 2em;
+    padding: 1.5em;
+    border-top: 1px solid #e2e8f0;
+}
+.footer-note a { color: #0055A4; text-decoration: none; }
+.footer-note a:hover { text-decoration: underline; }
+
+/* ─── Animations ─── */
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.2} }
+.cursor {
+    display: inline-block; width: 0.6em; height: 1em;
+    background: #EF4135; vertical-align: middle;
+    animation: blink 1s step-end infinite; margin-left: 2px;
+}
+@keyframes fadeUp { from { opacity:0; transform: translateY(20px);} to {opacity:1; transform: translateY(0);} }
+.fade-up { animation: fadeUp 0.7s ease both; }
+.svg-illustration { display: block; margin: 0 auto; max-width: 100%; height: auto; }
+</style>
+</head>
+<body>
+<div class="container">
+
+<div class="tricolore">
+    <span class="bleu"></span>
+    <span class="blanc"></span>
+    <span class="rouge"></span>
+</div>
+
+<header class="fade-up">
+    <div class="avatar">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 2L3 7v10l9 5 9-5V7l-9-5z" stroke="#0055A4" stroke-width="1.5" stroke-linejoin="round"/>
+            <path d="M8 10l-2 2 2 2M16 10l2 2-2 2M13.5 8l-3 8" stroke="#EF4135" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+    </div>
+    <h1>type_juggling<span class="bleu">.</span>php <span class="cursor"></span></h1>
+    <p class="subtitle">
+        Comment un simple <code>==</code> au lieu de <code>===</code> peut compromettre une authentification MD5.
+        Démonstration interactive, 100 % locale.
+    </p>
+    <div class="badges">
+        <span class="badge bleu">🐘 PHP &lt; 8.0</span>
+        <span class="badge rouge">⚠️ type juggling</span>
+        <span class="badge vert">🛡️ hash_equals</span>
+        <span class="badge">📍 100% local</span>
+    </div>
+</header>
+
+<!-- ═══ 1. Principe ═══ -->
+<section>
+    <h2>
+        <svg class="ico" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="#0055A4" stroke-width="1.5"/><path d="M12 8v5M12 16.5v.5" stroke="#0055A4" stroke-width="2" stroke-linecap="round"/></svg>
+        1. Le principe du type juggling
+    </h2>
+    <p>
+        En PHP, l'opérateur <code>==</code> (loose) effectue des conversions de type implicites avant de comparer.
+        Quand deux chaînes <em>ressemblent</em> à des nombres, PHP les convertit silencieusement en nombres.
+    </p>
+    <p>
+        Avec les hashs MD5, si un hash commence par <code>0e</code> suivi uniquement de chiffres
+        (ex. <code>0e462097...</code>), PHP l'interprète comme <strong>0 × 10<sup>462097...</sup> = 0</strong>.
+    </p>
+
+    <svg class="svg-illustration" viewBox="0 0 720 180" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Schéma : deux hashs magiques comparés avec == donnent true">
+        <defs>
+            <linearGradient id="gradBleuRouge" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stop-color="#0055A4"/>
+                <stop offset="100%" stop-color="#EF4135"/>
+            </linearGradient>
+            <marker id="arrow2" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+                <path d="M0,0 L0,6 L9,3 z" fill="#a0aec0"/>
+            </marker>
+        </defs>
+        <rect x="20" y="55" width="220" height="70" rx="10" fill="#ffffff" stroke="url(#gradBleuRouge)" stroke-width="2"/>
+        <text x="130" y="85" text-anchor="middle" fill="#0055A4" font-family="monospace" font-size="13" font-weight="700">0e462097431...</text>
+        <text x="130" y="108" text-anchor="middle" fill="#4a5568" font-family="monospace" font-size="11">PHP voit 0 × 10^... = 0</text>
+        <line x1="250" y1="90" x2="300" y2="90" stroke="#a0aec0" stroke-width="2" marker-end="url(#arrow2)"/>
+        <text x="275" y="80" text-anchor="middle" fill="#0055A4" font-family="monospace" font-size="14" font-weight="700">==</text>
+        <rect x="310" y="55" width="220" height="70" rx="10" fill="#ffffff" stroke="url(#gradBleuRouge)" stroke-width="2"/>
+        <text x="420" y="85" text-anchor="middle" fill="#0055A4" font-family="monospace" font-size="13" font-weight="700">0e830400451...</text>
+        <text x="420" y="108" text-anchor="middle" fill="#4a5568" font-family="monospace" font-size="11">PHP voit 0 × 10^... = 0</text>
+        <line x1="540" y1="90" x2="590" y2="90" stroke="#a0aec0" stroke-width="2" marker-end="url(#arrow2)"/>
+        <rect x="600" y="65" width="100" height="50" rx="8" fill="#EF4135"/>
+        <text x="650" y="96" text-anchor="middle" fill="#fff" font-family="monospace" font-size="15" font-weight="700">TRUE</text>
+    </svg>
+
+    <p>
+        Deux hashs MD5 <strong>différents</strong> mais tous deux « magiques » deviennent donc « égaux » en <code>==</code>.
+    </p>
+    <div class="note">
+        <strong>PHP 8.0+ a corrigé ce comportement.</strong> Depuis la RFC « Saner string to number comparisons »,
+        deux chaînes numériques sont comparées caractère par caractère.
+    </div>
+</section>
+
+<!-- ═══ 2. Hashs en direct ═══ -->
+<section>
+    <h2>
+        <svg class="ico" viewBox="0 0 24 24" fill="none"><path d="M12 2l2.5 6.5L21 11l-6.5 2.5L12 20l-2.5-6.5L3 11l6.5-2.5L12 2z" stroke="#0055A4" stroke-width="1.5" stroke-linejoin="round"/></svg>
+        2. Magic hashes en direct
+    </h2>
+    <p>Tapez une chaîne — son MD5 est calculé localement (rien n'est envoyé). Le système détecte si le hash est magique.</p>
+
+    <div class="input-group">
+        <input type="text" id="hashInput" placeholder="essayez : 240610708, QNKCDZO, aabg7XSs, ou votre propre texte" autocomplete="off">
+    </div>
+    <div class="hash-display" id="hashOutput">md5("") = d41d8cd98f00b204e9800998ecf8427e</div>
+    <div id="hashStatus" class="result-box">
+        <strong>Statut :</strong> <span id="hashStatusText">Non magique</span>
+    </div>
+
+    <h3>
+        <svg class="ico" viewBox="0 0 24 24" fill="none"><path d="M4 6h16M4 12h16M4 18h10" stroke="#4a5568" stroke-width="2" stroke-linecap="round"/></svg>
+        Magic hashes connus
+    </h3>
+    <table>
+        <tr><th>Chaîne d'entrée</th><th>md5 produit</th><th>Magique ?</th></tr>
+        <tr><td><code>240610708</code></td><td><code>0e462097431906509019562988736854</code></td><td><span class="badge jaune">OUI</span></td></tr>
+        <tr><td><code>QNKCDZO</code></td><td><code>0e830400451993494058024219903391</code></td><td><span class="badge jaune">OUI</span></td></tr>
+        <tr><td><code>aabg7XSs</code></td><td><code>0e087386482136013740957780965295</code></td><td><span class="badge jaune">OUI</span></td></tr>
+        <tr><td><code>aabC9RqS</code></td><td><code>0e041022518165728065344349536299</code></td><td><span class="badge jaune">OUI</span></td></tr>
+        <tr><td><code>password</code></td><td><code>5f4dcc3b5aa765d61d8327deb882cf99</code></td><td><span class="badge">NON</span></td></tr>
+        <tr><td><code>admin</code></td><td><code>21232f297a57a5a743894a0e4a801fc3</code></td><td><span class="badge">NON</span></td></tr>
+    </table>
+</section>
+
+<!-- ═══ 3. Simulateur ═══ -->
+<section>
+    <h2>
+        <svg class="ico" viewBox="0 0 24 24" fill="none"><path d="M8 4h8M6 8h12M4 12h16M6 16h12M8 20h8" stroke="#0055A4" stroke-width="1.8" stroke-linecap="round"/></svg>
+        3. Simulateur de comparaison PHP
+    </h2>
+    <p>Entrez deux valeurs. Le simulateur reproduit le comportement de PHP selon le mode et la version.</p>
+
+    <div class="input-group"><input type="text" id="cmpA" placeholder="Valeur A (ex: 0e462097431...)"></div>
+    <div class="input-group"><input type="text" id="cmpB" placeholder="Valeur B (ex: 0e830400451...)"></div>
+
+    <h3>Mode de comparaison</h3>
+    <div class="toggle-group danger" id="modeToggle">
+        <button data-mode="loose" class="active">Loose (==)</button>
+        <button data-mode="strict">Strict (===)</button>
+    </div>
+
+    <h3>Version PHP</h3>
+    <div class="toggle-group" id="phpToggle">
+        <button data-php="7.4" class="active">PHP 7.4 (vulnérable)</button>
+        <button data-php="8.0">PHP 8.0+ (corrigé)</button>
+    </div>
+
+    <div id="cmpResult" class="result-box">
+        <strong>Résultat :</strong> <span id="cmpResultText">—</span>
+        <pre id="cmpTrace"></pre>
+    </div>
+
+    <h3>Exemples à essayer</h3>
+    <ul style="margin-left: 1.4em; color:#4a5568; font-size:0.9em;">
+        <li><code>0e462097431906509019562988736854</code> vs <code>0e830400451993494058024219903391</code> en <code>==</code> + PHP 7.4 → <strong style="color:#EF4135">true</strong></li>
+        <li>Les mêmes en <code>===</code> → <strong style="color:#2f855a">false</strong></li>
+        <li>Les mêmes en <code>==</code> + PHP 8.0+ → <strong style="color:#2f855a">false</strong></li>
+        <li><code>"abc" == 0</code> en PHP 7.4 → <strong style="color:#EF4135">true</strong></li>
+        <li><code>"1" == "01"</code> en PHP 7.4 → <strong style="color:#EF4135">true</strong></li>
+    </ul>
+</section>
+
+<!-- ═══ 4. Attaque animée ═══ -->
+<section>
+    <h2>
+        <svg class="ico" viewBox="0 0 24 24" fill="none"><path d="M13 2L3 14h7l-1 8 10-12h-7l1-8z" stroke="#EF4135" stroke-width="1.5" stroke-linejoin="round"/></svg>
+        4. Attaque type juggling — pas à pas
+    </h2>
+    <p>Scénario : mot de passe stocké en MD5, comparé avec <code>==</code>. L'attaquant ne connaît pas le vrai mot de passe, mais a une liste de magic hashes.</p>
+
+    <div class="warning">
+        <strong>Contexte :</strong> hash stocké pour <code>alice</code> = <code>0e462097431906509019562988736854</code> (= md5("240610708")).
+        L'attaquant essaie <code>QNKCDZO</code>.
+    </div>
+
+    <button class="btn rouge" id="attackBtn">▶ Lancer l'animation</button>
+
+    <div id="attackSteps" style="margin-top: 1.5em;">
+        <div class="diagram-step" id="step1">
+            <div class="step-number">1</div>
+            <div class="step-content"><strong>L'attaquant soumet :</strong><br><code>username=alice &amp; password=QNKCDZO</code></div>
+        </div>
+        <div class="diagram-step" id="step2">
+            <div class="step-number">2</div>
+            <div class="step-content"><strong>Le serveur calcule :</strong><br><code>md5("QNKCDZO") = 0e830400451993494058024219903391</code>
+                <div class="hash-display">0e830400451993494058024219903391</div>
+            </div>
+        </div>
+        <div class="diagram-step" id="step3">
+            <div class="step-number">3</div>
+            <div class="step-content"><strong>Hash stocké pour alice :</strong><br><code>SELECT password FROM users WHERE user='alice'</code>
+                <div class="hash-display magic">0e462097431906509019562988736854</div>
+            </div>
+        </div>
+        <div class="diagram-step" id="step4">
+            <div class="step-number">4</div>
+            <div class="step-content"><strong>Comparaison vulnérable :</strong><br><code>if (md5($input) == $stored_hash)</code>
+                <div class="diagram" style="margin:0.8em 0;">
+                    <div class="diagram-box magic">"0e8304..." → <strong>0</strong></div>
+                    <div class="diagram-arrow">==</div>
+                    <div class="diagram-box magic">"0e4620..." → <strong>0</strong></div>
+                    <div class="diagram-arrow">→</div>
+                    <div class="diagram-equals">TRUE</div>
+                </div>
+            </div>
+        </div>
+        <div class="diagram-step" id="step5">
+            <div class="step-number">5</div>
+            <div class="step-content"><strong>Authentification réussie :</strong><br><code>$_SESSION['user'] = 'alice';</code>
+                <div style="margin-top:0.4em;">L'attaquant est connecté sans connaître le mot de passe (<code>240610708</code>).</div>
+            </div>
+        </div>
+    </div>
+
+    <div id="attackResult" class="result-box" style="margin-top:1em; display:none;">
+        <strong>Conclusion :</strong> authentification réussie sans connaître le vrai mot de passe.
+        Exploitation d'une comparaison <code>==</code> sur hashs MD5.
+    </div>
+</section>
+
+<!-- ═══ 5. PHP 8 ═══ -->
+<section>
+    <h2>
+        <svg class="ico" viewBox="0 0 24 24" fill="none"><path d="M5 12l4 4L19 6" stroke="#2f855a" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        5. La correction en PHP 8.0+
+    </h2>
+    <p>La <a href="https://wiki.php.net/rfc/string_to_number_comparison" target="_blank" style="color:#0055A4">RFC « Saner string to number comparisons »</a> (PHP 8.0, novembre 2020) a modifié <code>==</code> :</p>
+    <div class="grid-2">
+        <div>
+            <h3 style="margin-top:0;">PHP 7.4 et antérieur</h3>
+            <pre><code><span class="cmt">// Chaînes numériques → nombres</span>
+<span class="str">"0e4620..."</span> == <span class="str">"0e8304..."</span>
+<span class="cmt">// → 0 == 0 → true ❌</span>
+
+<span class="str">"1"</span> == <span class="str">"01"</span>
+<span class="cmt">// → 1 == 1 → true ❌</span>
+
+<span class="str">"abc"</span> == 0
+<span class="cmt">// → 0 == 0 → true ❌</span></code></pre>
+        </div>
+        <div>
+            <h3 style="margin-top:0;">PHP 8.0 et supérieur</h3>
+            <pre><code><span class="cmt">// Chaînes numériques → chaînes</span>
+<span class="str">"0e4620..."</span> == <span class="str">"0e8304..."</span>
+<span class="cmt">// → false ✅</span>
+
+<span class="str">"1"</span> == <span class="str">"01"</span>
+<span class="cmt">// → false ✅</span>
+
+<span class="str">"abc"</span> == 0
+<span class="cmt">// → false ✅</span></code></pre>
+        </div>
+    </div>
+    <div class="note">
+        <strong>Pourquoi ça ne suffit pas :</strong> PHP 8 corrige le type juggling, mais la bonne pratique reste
+        <code>hash_equals()</code> ou <code>password_verify()</code> (comparaison en temps constant, résistante aux timing attacks).
+    </div>
+</section>
+
+<!-- ═══ 6. Défenses ═══ -->
+<section>
+    <h2>
+        <svg class="ico" viewBox="0 0 24 24" fill="none"><path d="M12 2l8 4v6c0 5-3.5 8.5-8 10-4.5-1.5-8-5-8-10V6l8-4z" stroke="#0055A4" stroke-width="1.5" stroke-linejoin="round"/><path d="M9 12l2 2 4-4" stroke="#2f855a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        6. Comment se défendre
+    </h2>
+    <div class="grid-2">
+        <div>
+            <h3 style="margin-top:0;"><span class="badge jaune">1</span> Stricter la comparaison</h3>
+            <pre><code><span class="cmt">// Au lieu de :</span>
+if (md5($input) == $stored) { ... }
+
+<span class="cmt">// Utiliser :</span>
+if (md5($input) === $stored) { ... }</code></pre>
+            <p style="font-size:0.88em;color:#4a5568;">Bloque le type juggling, mais reste sensible au timing attack.</p>
+        </div>
+        <div>
+            <h3 style="margin-top:0;"><span class="badge bleu">2</span> Constant-time</h3>
+            <pre><code><span class="cmt">// hash_equals : O(n) sans court-circuit</span>
+if (hash_equals($stored, md5($input))) { ... }</code></pre>
+            <p style="font-size:0.88em;color:#4a5568;">Bloque type juggling + timing attacks. MD5 reste faible.</p>
+        </div>
+    </div>
+    <h3><span class="badge vert">3</span> Oublier MD5 pour les mots de passe</h3>
+    <pre><code><span class="cmt">// Inscription</span>
+$stored = <span class="fn">password_hash</span>($password, PASSWORD_DEFAULT);
+
+<span class="cmt">// Login</span>
+if (<span class="fn">password_verify</span>($input, $stored)) {
+    <span class="cmt">// ✅ hash_equals + bcrypt/argon2 + salt automatique</span>
+}</code></pre>
+    <div class="warning">
+        <strong>Pourquoi MD5 ne doit jamais servir pour des mots de passe :</strong>
+        <ul>
+            <li>Conçu pour être rapide → brute force GPU (~25 milliards MD5/s)</li>
+            <li>Pas de salt intégré → rainbow tables</li>
+            <li>Conçu pour l'intégrité, pas pour les secrets</li>
+            <li>bcrypt/argon2 sont des KDF pensés pour ralentir les attaques</li>
+        </ul>
+    </div>
+</section>
+
+<!-- ═══ 7. Vulnérable vs sûr ═══ -->
+<section>
+    <h2>
+        <svg class="ico" viewBox="0 0 24 24" fill="none"><path d="M8 3v18M16 3v18" stroke="#4a5568" stroke-width="1.5"/><path d="M4 8l4-4 4 4M12 16l4 4 4-4" stroke="#0055A4" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        7. Côte à côte : vulnérable vs sûr
+    </h2>
+    <div class="grid-2">
+        <div>
+            <h3 style="margin-top:0;"><span class="badge rouge">Vulnérable</span></h3>
+            <pre><code><span class="cmt">// login.php — NE PAS UTILISER</span>
+$user = $_POST[<span class="str">'username'</span>];
+$pass = $_POST[<span class="str">'password'</span>];
+$row  = $db-&gt;query(<span class="str">"SELECT ..."</span>)-&gt;fetch();
+
+<span class="cmt">// ❌ == loose, md5 faible, pas de timing-safe</span>
+if (<span class="fn">md5</span>($pass) == $row[<span class="str">'hash'</span>]) {
+    $_SESSION[<span class="str">'user'</span>] = $user;
+}</code></pre>
+        </div>
+        <div>
+            <h3 style="margin-top:0;"><span class="badge vert">Sûr</span></h3>
+            <pre><code><span class="cmt">// login.php — recommandé</span>
+$stmt = $db-&gt;prepare(<span class="str">"SELECT hash FROM users WHERE user=?"</span>);
+$stmt-&gt;execute([$_POST[<span class="str">'username'</span>]]);
+$row = $stmt-&gt;fetch();
+
+<span class="cmt">// ✅ password_verify (hash_equals + bcrypt/argon2)</span>
+if ($row &amp;&amp; <span class="fn">password_verify</span>($_POST[<span class="str">'password'</span>], $row[<span class="str">'hash'</span>])) {
+    $_SESSION[<span class="str">'user'</span>] = $row[<span class="str">'user'</span>];
+}</code></pre>
+        </div>
+    </div>
+</section>
+
+<div class="footer-note">
+    Démonstration locale — aucune donnée envoyée sur Internet.<br>
+    MD5 calculé en JavaScript via <a href="https://cdn.jsdelivr.net/npm/spark-md5" target="_blank" rel="noopener">SparkMD5</a>.
+</div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/spark-md5@3.0.2/spark-md5.min.js"></script>
+<script>
+/* ─── Reveal au scroll ─── */
+const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.12 });
+document.querySelectorAll('section').forEach(s => io.observe(s));
+
+/* ─── Helpers PHP simulation ─── */
+const MAGIC_HASH_REGEX = /^0[eE]\d+$/;
+const NUMERIC_STRING_REGEX = /^\s*[+-]?(\d+(\.\d*)?|\.\d+)([eE][+-]?\d+)?\s*$/;
+const isMagicHash     = s => typeof s === 'string' && MAGIC_HASH_REGEX.test(s);
+const isNumericString = s => typeof s === 'string' && NUMERIC_STRING_REGEX.test(s);
+
+function php7LooseCompare(a, b) {
+    if (isNumericString(a) && isNumericString(b)) return parseFloat(a) === parseFloat(b);
+    if (typeof a === 'string' && typeof b === 'string') return a === b;
+    return a == b;
+}
+function php8LooseCompare(a, b) {
+    if (typeof a === 'string' && typeof b === 'string' && isNumericString(a) && isNumericString(b)) return a === b;
+    return php7LooseCompare(a, b);
+}
+function strictCompare(a, b) { return a === b; }
+function compare(a, b, mode, phpVersion) {
+    if (mode === 'strict') return strictCompare(a, b);
+    return phpVersion === '8.0' ? php8LooseCompare(a, b) : php7LooseCompare(a, b);
+}
+
+/* ─── Section 2 : hash en direct ─── */
+const hashInput = document.getElementById('hashInput');
+const hashOutput = document.getElementById('hashOutput');
+const hashStatus = document.getElementById('hashStatus');
+const hashStatusText = document.getElementById('hashStatusText');
+
+function updateHash() {
+    const input = hashInput.value;
+    const hash = SparkMD5.hash(input);
+    hashOutput.textContent = `md5("${input}") = ${hash}`;
+    if (isMagicHash(hash)) {
+        hashOutput.classList.add('magic');
+        hashStatus.className = 'result-box warn';
+        hashStatusText.innerHTML = `<span class="badge jaune">MAGIQUE</span> — forme <code>0e&lt;chiffres&gt;</code>, vulnérable en <code>==</code> sous PHP &lt; 8.0`;
+    } else {
+        hashOutput.classList.remove('magic');
+        hashStatus.className = 'result-box';
+        hashStatusText.innerHTML = `<span class="badge">Normal</span> — pas magique (MD5 reste faible pour des mots de passe)`;
+    }
+}
+hashInput.addEventListener('input', updateHash);
+updateHash();
+
+/* ─── Section 3 : simulateur ─── */
+const cmpA = document.getElementById('cmpA');
+const cmpB = document.getElementById('cmpB');
+const cmpResult = document.getElementById('cmpResult');
+const cmpResultText = document.getElementById('cmpResultText');
+const cmpTrace = document.getElementById('cmpTrace');
+const modeToggle = document.getElementById('modeToggle');
+const phpToggle = document.getElementById('phpToggle');
+let cmpMode = 'loose', cmpPhp = '7.4';
+
+modeToggle.querySelectorAll('button').forEach(btn => btn.addEventListener('click', () => {
+    modeToggle.querySelectorAll('button').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active'); cmpMode = btn.dataset.mode; updateCompare();
+}));
+phpToggle.querySelectorAll('button').forEach(btn => btn.addEventListener('click', () => {
+    phpToggle.querySelectorAll('button').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active'); cmpPhp = btn.dataset.php; updateCompare();
+}));
+
+function updateCompare() {
+    const a = cmpA.value, b = cmpB.value;
+    if (!a || !b) {
+        cmpResult.className = 'result-box';
+        cmpResultText.textContent = 'Entrez deux valeurs à comparer';
+        cmpTrace.textContent = ''; return;
+    }
+    const result = compare(a, b, cmpMode, cmpPhp);
+    const op = cmpMode === 'strict' ? '===' : '==';
+    let trace = `// mode ${cmpMode} — PHP ${cmpPhp === '8.0' ? '8.0+' : '7.x'}\nif ("${a}" ${op} "${b}")\n`;
+    if (cmpMode === 'strict') {
+        trace += `\n// strict : comparaison caractère par caractère, pas de conversion\n// résultat : ${result ? 'true ✅' : 'false'}`;
+    } else if (cmpPhp === '7.4') {
+        if (isNumericString(a) && isNumericString(b)) {
+            trace += `\n// PHP 7.x : deux chaînes numériques → nombres\n// parseFloat("${a}") = ${parseFloat(a)}\n// parseFloat("${b}") = ${parseFloat(b)}\n// → ${result ? 'true ✅ (vulnérable)' : 'false'}`;
+            if (isMagicHash(a) && isMagicHash(b)) trace += `\n\n// ⚠️ magic hashes : chacun = 0 × 10^n = 0\n// → 0 == 0 = true`;
+        } else trace += `\n// au moins une chaîne non numérique\n// résultat : ${result ? 'true' : 'false'}`;
+    } else {
+        if (isNumericString(a) && isNumericString(b)) {
+            trace += `\n// PHP 8.0+ : chaînes numériques → comparaison de chaînes\n// "${a}" === "${b}" → ${result ? 'true' : 'false'}\n// type juggling corrigé`;
+            if (isMagicHash(a) && isMagicHash(b) && a !== b) trace += `\n\n// ✅ magic hashes différents → false (protégé)`;
+        } else trace += `\n// résultat : ${result ? 'true' : 'false'}`;
+    }
+    cmpResult.className = `result-box ${result ? 'danger' : 'success'}`;
+    cmpResultText.innerHTML = `<span class="badge ${result ? 'rouge' : 'vert'}">${result ? 'TRUE' : 'FALSE'}</span> <code>${a} ${op} ${b}</code>`;
+    cmpTrace.textContent = trace;
+}
+cmpA.addEventListener('input', updateCompare);
+cmpB.addEventListener('input', updateCompare);
+updateCompare();
+
+/* ─── Section 4 : animation attaque ─── */
+const attackBtn = document.getElementById('attackBtn');
+const attackSteps = ['step1','step2','step3','step4','step5'].map(id => document.getElementById(id));
+const attackResult = document.getElementById('attackResult');
+let attackRunning = false;
+
+attackBtn.addEventListener('click', async () => {
+    if (attackRunning) return;
+    attackRunning = true;
+    attackBtn.disabled = true;
+    attackBtn.textContent = '⏳ Animation en cours...';
+    attackSteps.forEach(s => s.classList.remove('active','success','danger'));
+    attackResult.style.display = 'none';
+
+    for (let i = 0; i < attackSteps.length; i++) {
+        attackSteps[i].classList.add('active');
+        await new Promise(r => setTimeout(r, 1100));
+        if (i < attackSteps.length - 1) {
+            attackSteps[i].classList.remove('active');
+            attackSteps[i].classList.add('success');
+        }
+    }
+    attackSteps[4].classList.remove('active');
+    attackSteps[4].classList.add('danger');
+    attackResult.style.display = 'block';
+    attackResult.className = 'result-box danger';
+    attackBtn.disabled = false;
+    attackBtn.textContent = "▶ Rejouer l'animation";
+    attackRunning = false;
+});
+</script>
+</body>
+</html>
